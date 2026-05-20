@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
+import IssueActions from '@/components/IssueActions'
 
 export const dynamic = 'force-dynamic'
 
@@ -52,6 +53,7 @@ export default async function AdminIssues() {
                 <th>Issue Date</th>
                 <th>Return Date</th>
                 <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -76,6 +78,7 @@ export default async function AdminIssues() {
                       {issue.status}
                     </span>
                   </td>
+                  <td><IssueActions issue={issue} /></td>
                 </tr>
               ))}
             </tbody>

@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
+import ToolActions from '@/components/ToolActions'
 
 export const dynamic = 'force-dynamic'
 
@@ -85,6 +86,7 @@ export default async function AdminDashboard() {
                 <th>Category</th>
                 <th>Available</th>
                 <th>Total</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -95,7 +97,9 @@ export default async function AdminDashboard() {
                     {tool.imageData ? (
                       <img src={tool.imageData} alt={tool.name} className="rounded-custom" style={{ width: '40px', height: '40px', objectFit: 'cover' }} />
                     ) : (
-                      <span className="text-muted">—</span>
+                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16" className="text-muted" style={{ opacity: 0.4 }}>
+                        <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z"/>
+                      </svg>
                     )}
                   </td>
                   <td className="fw-medium">{tool.name}</td>
@@ -106,6 +110,7 @@ export default async function AdminDashboard() {
                     </span>
                   </td>
                   <td>{tool.totalQty}</td>
+                  <td><ToolActions tool={tool} /></td>
                 </tr>
               ))}
             </tbody>

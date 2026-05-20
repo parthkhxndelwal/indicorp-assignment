@@ -42,10 +42,12 @@ export default function MechanicDashboard() {
   const [conditionNotes, setConditionNotes] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [issueLoading, setIssueLoading] = useState(false)
+  const [dataLoading, setDataLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'tools' | 'issued' | 'history'>('tools')
 
   const fetchData = useCallback(async () => {
+    setDataLoading(true)
     const [toolsData, activeData, historyData] = await Promise.all([
       getAvailableTools(),
       getMechanicActiveIssues(session?.user?.id || ''),
@@ -54,6 +56,7 @@ export default function MechanicDashboard() {
     setTools(toolsData)
     setActiveIssues(activeData)
     setIssueHistory(historyData)
+    setDataLoading(false)
   }, [session?.user?.id])
 
   useEffect(() => {
@@ -70,7 +73,7 @@ export default function MechanicDashboard() {
     if (!issueModal) return
     setError('')
     setSuccess('')
-    setLoading(true)
+    setIssueLoading(true)
 
     const formData = new FormData()
     formData.set('toolId', issueModal.tool.id)
@@ -91,7 +94,7 @@ export default function MechanicDashboard() {
       setError(result.error || 'Failed to issue tool')
     }
 
-    setLoading(false)
+    setIssueLoading(false)
   }
 
   async function handleReturn(issueId: string) {
@@ -154,7 +157,11 @@ export default function MechanicDashboard() {
 
       {activeTab === 'tools' && (
         <>
-          {tools.length === 0 ? (
+          {dataLoading ? (
+            <div className="text-center mt-5">
+              <div className="spinner-border" role="status" />
+            </div>
+          ) : tools.length === 0 ? (
             <div className="empty-state">
               <div className="empty-icon">
                 <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -352,9 +359,9 @@ export default function MechanicDashboard() {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  disabled={loading || issueQty > issueModal.tool.availableQty || issueQty < 1}
+                  disabled={issueLoading || issueQty > issueModal.tool.availableQty || issueQty < 1}
                 >
-                  {loading ? 'Issuing...' : 'Issue Tool'}
+                  {issueLoading ? 'Issuing...' : 'Issue Tool'}
                 </button>
               </div>
             </form>

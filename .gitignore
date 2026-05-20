@@ -44,3 +44,12 @@ Thumbs.db
 
 # project evidence (QA screenshots, test output)
 .sisyphus/evidence/
+
+# sisyphus internal
+.sisyphus/boulder.json
+.sisyphus/notepads/
+.sisyphus/plans/
+
+# project docs (generated/local)
+DESIGN.md
+PRODUCT.md

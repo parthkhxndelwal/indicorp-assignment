@@ -437,25 +437,25 @@ footer {
 .badge-status-available,
 .badge-status-returned,
 .badge-success {
-  background: var(--color-success-subtle);
-  color: var(--color-success);
+  background: var(--color-success) !important;
+  color: #fff !important;
 }
 
 .badge-status-issued,
 .badge-warning {
-  background: var(--color-warning-subtle);
-  color: var(--color-warning);
+  background: var(--color-warning) !important;
+  color: #fff !important;
 }
 
 .badge-status-out,
 .badge-danger {
-  background: var(--color-danger-subtle);
-  color: var(--color-danger);
+  background: var(--color-danger) !important;
+  color: #fff !important;
 }
 
 .badge-inventory {
-  background: var(--color-accent-subtle);
-  color: var(--color-accent);
+  background: var(--color-accent) !important;
+  color: #fff !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
