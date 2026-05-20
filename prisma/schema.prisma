@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MECHANIC
+}
+
+enum MechanicLevel {
+  EXPERT
+  MEDIUM
+  NEW_RECRUIT
+  TRAINEE
+}
+
+enum IssueStatus {
+  ISSUED
+  RETURNED
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  name      String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mechanicProfile MechanicProfile?
+  issues          Issue[]          @relation("MechanicIssues")
+  approvedIssues  Issue[]          @relation("ApprovedIssues")
+}
+
+model MechanicProfile {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String        @unique @db.ObjectId
+  mobile    String        @unique
+  picture   String?
+  level     MechanicLevel
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Tool {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  category        String
+  imageData       String?
+  inventoryNumber String   @unique
+  availableQty    Int      @default(0)
+  totalQty        Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  issues Issue[]
+}
+
+model Issue {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  toolId         String      @db.ObjectId
+  mechanicId     String      @db.ObjectId
+  quantity       Int         @default(1)
+  purpose        String?
+  conditionNotes String?
+  issuedAt       DateTime    @default(now())
+  returnedAt     DateTime?
+  status         IssueStatus @default(ISSUED)
+  approvedById   String?     @db.ObjectId
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  tool       Tool  @relation(fields: [toolId], references: [id])
+  mechanic   User  @relation("MechanicIssues", fields: [mechanicId], references: [id])
+  approvedBy User? @relation("ApprovedIssues", fields: [approvedById], references: [id])
+}
