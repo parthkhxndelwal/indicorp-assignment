@@ -32,25 +32,51 @@ export default function Navbar() {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href="/mechanic/login">
-                    Mechanic Login
-                  </Link>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Login
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" href="/mechanic/login">
+                        Mechanic
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" href="/admin/login">
+                        Admin
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href="/mechanic/register">
-                    Mechanic Register
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href="/admin/login">
-                    Admin Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" href="/admin/register">
-                    Admin Register
-                  </Link>
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Register
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" href="/mechanic/register">
+                        Mechanic
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" href="/admin/register">
+                        Admin
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
               </>
             ) : session.user.role === 'ADMIN' ? (
