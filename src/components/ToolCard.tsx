@@ -25,40 +25,52 @@ export default function ToolCard({
   showIssueButton = false,
   showAdminInfo = false,
 }: ToolCardProps) {
+  // Determine availability status
+  const getAvailabilityClass = () => {
+    if (availableQty === 0) return 'out-of-stock'
+    if (availableQty <= 2) return 'low-stock'
+    return 'in-stock'
+  }
+
+  const getAvailabilityLabel = () => {
+    if (availableQty === 0) return 'Out of Stock'
+    if (availableQty <= 2) return 'Low Stock'
+    return 'In Stock'
+  }
+
   return (
-    <div className="card h-100">
-      <div className="card-img-top bg-light d-flex align-items-center justify-content-center" style={{ height: '180px' }}>
+    <div className="tool-card">
+      <div className="tool-card-image">
         {imageData ? (
           <img
             src={imageData}
             alt={name}
-            className="img-fluid"
-            style={{ maxHeight: '180px', objectFit: 'contain' }}
           />
         ) : (
-          <div className="text-muted">
-            <svg width="64" height="64" fill="currentColor" className="bi bi-tools" viewBox="0 0 16 16">
-              <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851 3.003 3.003 0 0 0-.928-4.057L7.531 5.53l3.081 2.2a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675A2.993 2.993 0 0 0 14 9a3 3 0 1 0-2.122-5.12L9.5 6.5 3.88 0H1z"/>
-            </svg>
-            <p className="small mt-1">No Image</p>
-          </div>
+          <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16" style={{ color: 'var(--color-text-muted)', opacity: 0.4 }}>
+            <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851 3.003 3.003 0 0 0-.928-4.057L7.531 5.53l3.081 2.2a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675A2.993 2.993 0 0 0 14 9a3 3 0 1 0-2.122-5.12L9.5 6.5 3.88 0H1z"/>
+          </svg>
         )}
       </div>
-      <div className="card-body">
-        <h6 className="card-title mb-1">{name}</h6>
-        <p className="card-text small text-muted mb-1">{category}</p>
-        <span className="badge bg-secondary mb-2">{inventoryNumber}</span>
+      <div className="tool-card-body">
+        <h5 className="tool-card-title">{name}</h5>
+        <div className="tool-card-meta">
+          <span>{category}</span>
+          <span>&middot;</span>
+          <span className="badge badge-inventory">{inventoryNumber}</span>
+        </div>
         <div className="d-flex justify-content-between align-items-center">
-          <span className={`small fw-bold ${availableQty > 0 ? 'text-success' : 'text-danger'}`}>
-            Available: {availableQty}
+          <span className={`available-indicator ${getAvailabilityClass()}`}>
+            <span className="dot"></span>
+            {getAvailabilityLabel()}: {availableQty}
           </span>
-          {showAdminInfo && <span className="small text-muted">Total: {totalQty}</span>}
+          <span className="tool-card-meta">Total: {totalQty}</span>
         </div>
       </div>
       {showIssueButton && availableQty > 0 && onIssue && (
-        <div className="card-footer bg-white border-0 pt-0">
+        <div className="tool-card-footer">
           <button
-            className="btn btn-primary btn-sm w-100"
+            className="btn btn-primary w-100 btn-sm"
             onClick={() => onIssue(id)}
           >
             Issue Tool

@@ -114,10 +114,10 @@ export default function MechanicDashboard() {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="page-header">
         <div>
           <h1>Mechanic Dashboard</h1>
-          <p className="text-muted mb-0">Welcome, {session?.user?.name}</p>
+          <p className="mb-0">Welcome, <span className="text-secondary">{session?.user?.name}</span></p>
         </div>
       </div>
 
@@ -131,40 +131,37 @@ export default function MechanicDashboard() {
         <button type="button" className="btn-close" onClick={() => setSuccess('')} />
       </div>}
 
-      <ul className="nav nav-tabs mb-4">
-        <li className="nav-item">
-          <button
-            className={`nav-link ${activeTab === 'tools' ? 'active' : ''}`}
-            onClick={() => setActiveTab('tools')}
-          >
-            Available Tools ({tools.length})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${activeTab === 'issued' ? 'active' : ''}`}
-            onClick={() => setActiveTab('issued')}
-          >
-            My Issued Tools ({activeIssues.length})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            className={`nav-link ${activeTab === 'history' ? 'active' : ''}`}
-            onClick={() => setActiveTab('history')}
-          >
-            History ({issueHistory.length})
-          </button>
-        </li>
-      </ul>
+      <div className="tabs-custom">
+        <button
+          className={`tab-item ${activeTab === 'tools' ? 'active' : ''}`}
+          onClick={() => setActiveTab('tools')}
+        >
+          Available Tools<span className="tab-count">{tools.length}</span>
+        </button>
+        <button
+          className={`tab-item ${activeTab === 'issued' ? 'active' : ''}`}
+          onClick={() => setActiveTab('issued')}
+        >
+          My Issued Tools<span className="tab-count">{activeIssues.length}</span>
+        </button>
+        <button
+          className={`tab-item ${activeTab === 'history' ? 'active' : ''}`}
+          onClick={() => setActiveTab('history')}
+        >
+          History<span className="tab-count">{issueHistory.length}</span>
+        </button>
+      </div>
 
       {activeTab === 'tools' && (
         <>
           {tools.length === 0 ? (
             <div className="empty-state">
-              <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851 3.003 3.003 0 0 0-.928-4.057L7.531 5.53l3.081 2.2a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675A2.993 2.993 0 0 0 14 9a3 3 0 1 0-2.122-5.12L9.5 6.5 3.88 0H1z"/>
-              </svg>
+              <div className="empty-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851 3.003 3.003 0 0 0-.928-4.057L7.531 5.53l3.081 2.2a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675A2.993 2.993 0 0 0 14 9a3 3 0 1 0-2.122-5.12L9.5 6.5 3.88 0H1z"/>
+                </svg>
+              </div>
+              <h4>No Tools Available</h4>
               <p>No tools available in inventory right now.</p>
             </div>
           ) : (
@@ -191,16 +188,19 @@ export default function MechanicDashboard() {
         <>
           {activeIssues.length === 0 ? (
             <div className="empty-state">
-              <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-              </svg>
+              <div className="empty-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                </svg>
+              </div>
+              <h4>No Issued Tools</h4>
               <p>No tools currently issued.</p>
             </div>
           ) : (
             <div className="table-responsive">
-              <table className="table table-hover">
-                <thead className="table-dark">
+              <table className="table">
+                <thead>
                   <tr>
                     <th>Tool</th>
                     <th>Inventory #</th>
@@ -214,7 +214,7 @@ export default function MechanicDashboard() {
                   {activeIssues.map((issue) => (
                     <tr key={issue.id}>
                       <td className="fw-medium">{issue.tool.name}</td>
-                      <td><span className="badge bg-secondary">{issue.tool.inventoryNumber}</span></td>
+                      <td><span className="badge badge-inventory">{issue.tool.inventoryNumber}</span></td>
                       <td>{issue.quantity}</td>
                       <td>{issue.purpose || '—'}</td>
                       <td>{new Date(issue.issuedAt).toLocaleDateString()}</td>
@@ -239,16 +239,19 @@ export default function MechanicDashboard() {
         <>
           {issueHistory.length === 0 ? (
             <div className="empty-state">
-              <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-              </svg>
+              <div className="empty-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                </svg>
+              </div>
+              <h4>No History</h4>
               <p>No issue history yet.</p>
             </div>
           ) : (
             <div className="table-responsive">
-              <table className="table table-hover">
-                <thead className="table-dark">
+              <table className="table">
+                <thead>
                   <tr>
                     <th>Tool</th>
                     <th>Inventory #</th>
@@ -263,18 +266,18 @@ export default function MechanicDashboard() {
                   {issueHistory.map((issue) => (
                     <tr key={issue.id}>
                       <td className="fw-medium">{issue.tool.name}</td>
-                      <td><span className="badge bg-secondary">{issue.tool.inventoryNumber}</span></td>
+                      <td><span className="badge badge-inventory">{issue.tool.inventoryNumber}</span></td>
                       <td>{issue.quantity}</td>
                       <td>{issue.purpose || '—'}</td>
                       <td>{new Date(issue.issuedAt).toLocaleDateString()}</td>
                       <td>
                         {issue.returnedAt
                           ? new Date(issue.returnedAt).toLocaleDateString()
-                          : <span className="text-muted">—</span>
+                          : <span className="text-secondary">—</span>
                         }
                       </td>
                       <td>
-                        <span className={`badge badge-status ${issue.status === 'RETURNED' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                        <span className={`badge badge-status-${issue.status.toLowerCase()}`}>
                           {issue.status}
                         </span>
                       </td>
@@ -289,74 +292,72 @@ export default function MechanicDashboard() {
 
       {/* Issue Modal */}
       {issueModal && (
-        <div className="modal d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Issue Tool</h5>
-                <button type="button" className="btn-close" onClick={() => setIssueModal(null)} />
-              </div>
-              <form onSubmit={handleIssue}>
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label className="form-label fw-bold">Tool</label>
-                    <input type="text" className="form-control" value={issueModal.tool.name} readOnly />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label fw-bold">Available Quantity</label>
-                    <input type="text" className="form-control" value={issueModal.tool.availableQty} readOnly />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="qty" className="form-label fw-bold">Quantity to Issue *</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="qty"
-                      min={1}
-                      max={issueModal.tool.availableQty}
-                      value={issueQty}
-                      onChange={(e) => setIssueQty(parseInt(e.target.value) || 1)}
-                      required
-                    />
-                    {issueQty > issueModal.tool.availableQty && (
-                      <div className="text-danger small mt-1">Cannot exceed available quantity</div>
-                    )}
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="purpose" className="form-label">Purpose / Reason</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="purpose"
-                      value={purpose}
-                      onChange={(e) => setPurpose(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="notes" className="form-label">Condition Notes</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="notes"
-                      value={conditionNotes}
-                      onChange={(e) => setConditionNotes(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => setIssueModal(null)}>
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={loading || issueQty > issueModal.tool.availableQty || issueQty < 1}
-                  >
-                    {loading ? 'Issuing...' : 'Issue Tool'}
-                  </button>
-                </div>
-              </form>
+        <div className="modal-custom-overlay">
+          <div className="modal-custom">
+            <div className="modal-custom-header">
+              <h5>Issue Tool</h5>
+              <button type="button" className="btn-close" onClick={() => setIssueModal(null)} />
             </div>
+            <form onSubmit={handleIssue}>
+              <div className="modal-custom-body">
+                <div className="mb-3">
+                  <label className="form-label">Tool</label>
+                  <input type="text" className="form-control" value={issueModal.tool.name} readOnly />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Available Quantity</label>
+                  <input type="text" className="form-control" value={issueModal.tool.availableQty} readOnly />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="qty" className="form-label">Quantity to Issue *</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="qty"
+                    min={1}
+                    max={issueModal.tool.availableQty}
+                    value={issueQty}
+                    onChange={(e) => setIssueQty(parseInt(e.target.value) || 1)}
+                    required
+                  />
+                  {issueQty > issueModal.tool.availableQty && (
+                    <div className="text-danger small mt-1">Cannot exceed available quantity</div>
+                  )}
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="purpose" className="form-label">Purpose / Reason</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="purpose"
+                    value={purpose}
+                    onChange={(e) => setPurpose(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="notes" className="form-label">Condition Notes</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="notes"
+                    value={conditionNotes}
+                    onChange={(e) => setConditionNotes(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="modal-custom-footer">
+                <button type="button" className="btn btn-outline-secondary" onClick={() => setIssueModal(null)}>
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={loading || issueQty > issueModal.tool.availableQty || issueQty < 1}
+                >
+                  {loading ? 'Issuing...' : 'Issue Tool'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

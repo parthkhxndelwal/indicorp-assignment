@@ -7,9 +7,9 @@ export default function Navbar() {
   const { data: session } = useSession()
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-main">
       <div className="container">
-        <Link className="navbar-brand fw-bold" href="/">
+        <Link className="navbar-brand fw-semibold" href="/">
           Tools Management
         </Link>
         <button
@@ -32,51 +32,25 @@ export default function Navbar() {
                     Home
                   </Link>
                 </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Mechanic
-                  </a>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link className="dropdown-item" href="/mechanic/login">
-                        Login
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" href="/mechanic/register">
-                        Register
-                      </Link>
-                    </li>
-                  </ul>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/mechanic/login">
+                    Mechanic Login
+                  </Link>
                 </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Admin
-                  </a>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link className="dropdown-item" href="/admin/login">
-                        Login
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" href="/admin/register">
-                        Register
-                      </Link>
-                    </li>
-                  </ul>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/mechanic/register">
+                    Mechanic Register
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/admin/login">
+                    Admin Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/admin/register">
+                    Admin Register
+                  </Link>
                 </li>
               </>
             ) : session.user.role === 'ADMIN' ? (
@@ -98,7 +72,8 @@ export default function Navbar() {
                 </li>
                 <li className="nav-item">
                   <button
-                    className="nav-link btn btn-link"
+                    className="nav-link"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                     onClick={() => signOut({ callbackUrl: '/' })}
                   >
                     Logout
@@ -114,7 +89,8 @@ export default function Navbar() {
                 </li>
                 <li className="nav-item">
                   <button
-                    className="nav-link btn btn-link"
+                    className="nav-link"
+                    style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                     onClick={() => signOut({ callbackUrl: '/' })}
                   >
                     Logout

@@ -34,9 +34,10 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6 col-lg-4">
-        <h2 className="mb-4">Admin Login</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Admin Login</h2>
+        <p className="auth-subtitle">Sign in to manage your tool room</p>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
@@ -56,14 +57,14 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <div className="mt-3 text-center">
-          <p className="mb-1">
-            New admin? <Link href="/admin/register">Register here</Link>
-          </p>
-          <p className="mb-0">
-            <Link href="/mechanic/login">Mechanic Login</Link>
-          </p>
-        </div>
+        <div className="auth-divider"></div>
+
+        <p className="text-center text-muted" style={{ fontSize: 'var(--font-size-body)' }}>
+          New admin? <Link href="/admin/register">Register here</Link>
+        </p>
+        <p className="text-center text-muted" style={{ fontSize: 'var(--font-size-body)', marginBottom: 0 }}>
+          <Link href="/mechanic/login">Mechanic Login</Link>
+        </p>
       </div>
     </div>
   )

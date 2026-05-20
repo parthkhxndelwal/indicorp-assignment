@@ -72,9 +72,10 @@ export default function MechanicRegister() {
   }
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6 col-lg-5">
-        <h2 className="mb-4">Mechanic Registration</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Mechanic Registration</h2>
+        <p className="auth-subtitle">Create your mechanic account</p>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
@@ -150,7 +151,9 @@ export default function MechanicRegister() {
           </button>
         </form>
 
-        <p className="mt-3 text-center">
+        <div className="auth-divider"></div>
+
+        <p className="text-center text-muted" style={{ fontSize: 'var(--font-size-body)', marginBottom: 0 }}>
           Already registered? <Link href="/mechanic/login">Login here</Link>
         </p>
       </div>

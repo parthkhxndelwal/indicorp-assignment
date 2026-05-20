@@ -47,9 +47,10 @@ export default function AdminRegister() {
   }
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6 col-lg-4">
-        <h2 className="mb-4">Admin Registration</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Admin Registration</h2>
+        <p className="auth-subtitle">Create your admin account</p>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
@@ -80,7 +81,9 @@ export default function AdminRegister() {
           </button>
         </form>
 
-        <p className="mt-3 text-center">
+        <div className="auth-divider"></div>
+
+        <p className="text-center text-muted" style={{ fontSize: 'var(--font-size-body)', marginBottom: 0 }}>
           Already registered? <Link href="/admin/login">Login here</Link>
         </p>
       </div>

@@ -21,23 +21,26 @@ export default async function AdminIssues() {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="page-header">
         <h1>Issue Register</h1>
-        <span className="badge bg-secondary fs-6">Total: {issues.length}</span>
+        <span className="badge badge-inventory">Total: {issues.length}</span>
       </div>
 
       {issues.length === 0 ? (
         <div className="empty-state">
-          <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path d="M7.5 5.5a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3zm0 5a.5.5 0 0 1 1 0v.5a.5.5 0 0 1-1 0v-.5z"/>
-          </svg>
-          <p>No issues recorded yet. Issues will appear when mechanics request tools.</p>
+          <div className="empty-icon">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M7.5 5.5a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3zm0 5a.5.5 0 0 1 1 0v.5a.5.5 0 0 1-1 0v-.5z"/>
+            </svg>
+          </div>
+          <h4>No issues recorded</h4>
+          <p>Issues will appear when mechanics request tools.</p>
         </div>
       ) : (
         <div className="table-responsive">
-          <table className="table table-hover">
-            <thead className="table-dark">
+          <table className="table">
+            <thead>
               <tr>
                 <th>#</th>
                 <th>Tool Name</th>
@@ -56,7 +59,7 @@ export default async function AdminIssues() {
                 <tr key={issue.id}>
                   <td>{index + 1}</td>
                   <td className="fw-medium">{issue.tool.name}</td>
-                  <td><span className="badge bg-secondary">{issue.tool.inventoryNumber}</span></td>
+                  <td><span className="badge badge-inventory">{issue.tool.inventoryNumber}</span></td>
                   <td>{issue.mechanic.name}</td>
                   <td>{issue.quantity}</td>
                   <td>{issue.purpose || '—'}</td>
@@ -69,7 +72,7 @@ export default async function AdminIssues() {
                     }
                   </td>
                   <td>
-                    <span className={`badge badge-status ${issue.status === 'RETURNED' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                    <span className={`badge ${issue.status === 'RETURNED' ? 'badge-status-returned' : 'badge-status-issued'}`}>
                       {issue.status}
                     </span>
                   </td>

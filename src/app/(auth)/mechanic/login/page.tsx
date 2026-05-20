@@ -34,9 +34,10 @@ export default function MechanicLogin() {
   }
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-md-6 col-lg-4">
-        <h2 className="mb-4">Mechanic Login</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Mechanic Login</h2>
+        <p className="auth-subtitle">Sign in to access your tool room</p>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
@@ -56,14 +57,14 @@ export default function MechanicLogin() {
           </button>
         </form>
 
-        <div className="mt-3 text-center">
-          <p className="mb-1">
-            New mechanic? <Link href="/mechanic/register">Register here</Link>
-          </p>
-          <p className="mb-0">
-            <Link href="/admin/login">Admin Login</Link>
-          </p>
-        </div>
+        <div className="auth-divider"></div>
+
+        <p className="text-center text-muted" style={{ fontSize: 'var(--font-size-body)' }}>
+          New mechanic? <Link href="/mechanic/register">Register here</Link>
+        </p>
+        <p className="text-center text-muted" style={{ fontSize: 'var(--font-size-body)', marginBottom: 0 }}>
+          <Link href="/admin/login">Admin Login</Link>
+        </p>
       </div>
     </div>
   )

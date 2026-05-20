@@ -28,7 +28,7 @@ export default async function AdminDashboard() {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="page-header">
         <h1>Admin Dashboard</h1>
         <div className="d-flex gap-2">
           <Link href="/admin/tools/add" className="btn btn-primary">
@@ -42,43 +42,42 @@ export default async function AdminDashboard() {
 
       <div className="row g-3 mb-4">
         <div className="col-md-4">
-          <div className="card border-primary">
-            <div className="card-body text-center">
-              <div className="dashboard-stat text-primary">{totalTools}</div>
-              <div className="text-muted">Total Tools</div>
-            </div>
+          <div className="stat-card">
+            <div className="stat-value">{totalTools}</div>
+            <div className="stat-label">Total Tools</div>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card border-success">
-            <div className="card-body text-center">
-              <div className="dashboard-stat text-success">{totalMechanics}</div>
-              <div className="text-muted">Total Mechanics</div>
-            </div>
+          <div className="stat-card">
+            <div className="stat-value">{totalMechanics}</div>
+            <div className="stat-label">Total Mechanics</div>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card border-warning">
-            <div className="card-body text-center">
-              <div className="dashboard-stat text-warning">{activeIssues}</div>
-              <div className="text-muted">Active Issues</div>
-            </div>
+          <div className="stat-card">
+            <div className="stat-value">{activeIssues}</div>
+            <div className="stat-label">Active Issues</div>
           </div>
         </div>
       </div>
 
-      <h5 className="mb-3">Tool Inventory</h5>
+      <div className="section-header">
+        <h4>Tool Inventory</h4>
+      </div>
       {tools.length === 0 ? (
         <div className="empty-state">
-          <svg width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851 3.003 3.003 0 0 0-.928-4.057L7.531 5.53l3.081 2.2a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675A2.993 2.993 0 0 0 14 9a3 3 0 1 0-2.122-5.12L9.5 6.5 3.88 0H1z"/>
-          </svg>
-          <p>No tools in inventory. Add your first tool!</p>
+          <div className="empty-icon">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851 3.003 3.003 0 0 0-.928-4.057L7.531 5.53l3.081 2.2a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675A2.993 2.993 0 0 0 14 9a3 3 0 1 0-2.122-5.12L9.5 6.5 3.88 0H1z"/>
+            </svg>
+          </div>
+          <h4>No tools in inventory</h4>
+          <p>Add your first tool to get started!</p>
         </div>
       ) : (
         <div className="table-responsive">
-          <table className="table table-hover">
-            <thead className="table-dark">
+          <table className="table">
+            <thead>
               <tr>
                 <th>Inventory #</th>
                 <th>Image</th>
@@ -91,10 +90,10 @@ export default async function AdminDashboard() {
             <tbody>
               {tools.map((tool) => (
                 <tr key={tool.id}>
-                  <td><span className="badge bg-secondary">{tool.inventoryNumber}</span></td>
+                  <td><span className="badge badge-inventory">{tool.inventoryNumber}</span></td>
                   <td>
                     {tool.imageData ? (
-                      <img src={tool.imageData} alt={tool.name} style={{ width: '40px', height: '40px', objectFit: 'cover' }} className="rounded" />
+                      <img src={tool.imageData} alt={tool.name} className="rounded-custom" style={{ width: '40px', height: '40px', objectFit: 'cover' }} />
                     ) : (
                       <span className="text-muted">—</span>
                     )}
@@ -102,7 +101,7 @@ export default async function AdminDashboard() {
                   <td className="fw-medium">{tool.name}</td>
                   <td>{tool.category}</td>
                   <td>
-                    <span className={`badge ${tool.availableQty > 0 ? 'bg-success' : 'bg-danger'}`}>
+                    <span className={`badge ${tool.availableQty > 0 ? 'badge-status-available' : 'badge-status-out'}`}>
                       {tool.availableQty}
                     </span>
                   </td>
@@ -116,9 +115,11 @@ export default async function AdminDashboard() {
 
       {recentIssues.length > 0 && (
         <>
-          <h5 className="mb-3 mt-4">Recent Issues</h5>
+          <div className="section-header" style={{ marginTop: 'var(--space-xl)' }}>
+            <h4>Recent Issues</h4>
+          </div>
           <div className="table-responsive">
-            <table className="table table-sm table-hover">
+            <table className="table">
               <thead>
                 <tr>
                   <th>Tool</th>
@@ -136,7 +137,7 @@ export default async function AdminDashboard() {
                     <td>{issue.quantity}</td>
                     <td>{new Date(issue.issuedAt).toLocaleDateString()}</td>
                     <td>
-                      <span className={`badge ${issue.status === 'RETURNED' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                      <span className={`badge ${issue.status === 'RETURNED' ? 'badge-status-returned' : 'badge-status-issued'}`}>
                         {issue.status}
                       </span>
                     </td>

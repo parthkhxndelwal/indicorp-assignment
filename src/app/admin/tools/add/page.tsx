@@ -63,52 +63,54 @@ export default function AddTool() {
   return (
     <div className="row justify-content-center">
       <div className="col-md-6 col-lg-5">
-        <h2 className="mb-4">Add New Tool</h2>
+        <div className="p-4 rounded-custom-lg bg-surface">
+          <h2 className="mb-4">Add New Tool</h2>
 
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
+          {error && <div className="alert alert-danger">{error}</div>}
+          {success && <div className="alert alert-success">{success}</div>}
 
-        <form id="add-tool-form" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">Tool Name *</label>
-            <input type="text" className="form-control" id="name" name="name" required />
-          </div>
+          <form id="add-tool-form" onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">Tool Name *</label>
+              <input type="text" className="form-control" id="name" name="name" required />
+            </div>
 
-          <div className="mb-3">
-            <label htmlFor="category" className="form-label">Category *</label>
-            <select className="form-select" id="category" name="category" required>
-              <option value="">Select category...</option>
-              {TOOL_CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
-          </div>
+            <div className="mb-3">
+              <label htmlFor="category" className="form-label">Category *</label>
+              <select className="form-select" id="category" name="category" required>
+                <option value="">Select category...</option>
+                {TOOL_CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
 
-          <div className="mb-3">
-            <label htmlFor="image" className="form-label">Tool Image</label>
-            <input type="file" className="form-control" id="tool-image" accept="image/*" onChange={handleImageChange} />
-            {preview && (
-              <div className="mt-2">
-                <img src={preview} alt="Preview" className="img-thumbnail" style={{ maxHeight: '120px' }} />
+            <div className="mb-3">
+              <label htmlFor="image" className="form-label">Tool Image</label>
+              <input type="file" className="form-control" id="tool-image" accept="image/*" onChange={handleImageChange} />
+              {preview && (
+                <div className="mt-2">
+                  <img src={preview} alt="Preview" className="tool-card-image rounded-custom" style={{ maxHeight: '120px' }} />
+                </div>
+              )}
+            </div>
+
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label htmlFor="availableQty" className="form-label">Available Quantity *</label>
+                <input type="number" className="form-control" id="availableQty" name="availableQty" min={0} required defaultValue={0} />
               </div>
-            )}
-          </div>
-
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="availableQty" className="form-label">Available Quantity *</label>
-              <input type="number" className="form-control" id="availableQty" name="availableQty" min={0} required defaultValue={0} />
+              <div className="col-md-6 mb-3">
+                <label htmlFor="totalQty" className="form-label">Total Quantity *</label>
+                <input type="number" className="form-control" id="totalQty" name="totalQty" min={0} required defaultValue={0} />
+              </div>
             </div>
-            <div className="col-md-6 mb-3">
-              <label htmlFor="totalQty" className="form-label">Total Quantity *</label>
-              <input type="number" className="form-control" id="totalQty" name="totalQty" min={0} required defaultValue={0} />
-            </div>
-          </div>
 
-          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-            {loading ? 'Adding...' : 'Add Tool'}
-          </button>
-        </form>
+            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+              {loading ? 'Adding...' : 'Add Tool'}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   )
